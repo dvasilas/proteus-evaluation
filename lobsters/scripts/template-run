@@ -1,0 +1,32 @@
+Timestamp
+Logfile
+Runtime
+Target load
+Benchmark threads
+Max in flight read
+Max in flight write
+Conn pool size
+Load offered
+Total throughput
+[read] Throughput
+[read] p50(ms)
+[read] p90(ms)
+[read] p95(ms)
+[read] p99(ms)
+[write] Throughput
+[write] p50(ms)
+[write] p90(ms)
+[write] p95(ms)
+[write] p99(ms)
+[notificationLatency-dsdriver] p50(ms)
+[notificationLatency-dsdriver] p90(ms)
+[notificationLatency-dsdriver] p95(ms)
+[notificationLatency-dsdriver] p99(ms)
+[notificationLatency-sum] p50(ms)
+[notificationLatency-sum] p90(ms)
+[notificationLatency-sum] p95(ms)
+[notificationLatency-sum] p99(ms)
+[notificationLatency-join] p50(ms)
+[notificationLatency-join] p90(ms)
+[notificationLatency-join] p95(ms)
+[notificationLatency-join] p99(ms)

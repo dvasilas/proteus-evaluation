@@ -1,0 +1,67 @@
+version: '3'
+services:
+  dsdriver:
+#    image: dvasilas/proteus:${TAG_QPU}
+    image: 127.0.0.1:5000/proteus:${TAG_QPU}
+    networks:
+      - proteus_net
+      - qpu_graph
+    environment:
+      - MYSQL_PASSWORD=verySecrectQPUPwd
+    volumes:
+      - ${HOME}/volume/configs:/configs
+    ports:
+      - 50150:50150
+    command: /configs/dsdriver.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.dc == 1
+          - node.labels.client == true
+
+  sum-stories:
+#    image: dvasilas/proteus:${TAG_QPU}
+    image: 127.0.0.1:5000/proteus:${TAG_QPU}
+    networks:
+      - qpu_graph
+    environment:
+      - MYSQL_PASSWORD=verySecrectQPUPwd
+    volumes:
+      - ${HOME}/volume/configs:/configs
+    ports:
+      - 50250:50250
+    command: /configs/sum-stories.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.dc == 1
+          - node.labels.client == true
+
+  join-stories:
+#    image: dvasilas/proteus:${TAG_QPU} 
+    image: 127.0.0.1:5000/proteus:${TAG_QPU}
+    networks:
+      - qpu_graph
+    environment:
+      - MYSQL_PASSWORD=verySecrectQPUPwd
+    volumes:
+      - ${HOME}/volume/configs:/configs
+    ports:
+      - 50350:50350
+    command: /configs/join-stories.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.dc == 1
+          - node.labels.client == true
+
+networks:
+  qpu_graph:
+  proteus_net:
+    external: true

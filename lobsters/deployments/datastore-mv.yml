@@ -1,0 +1,19 @@
+version: '3'
+services:
+  datastore-mv:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=verySecretPwd
+    volumes:
+      - ${HOME}/volume/datastore/build/setup-lobsters.sh:/docker-entrypoint-initdb.d/setup.sh
+      - ${HOME}/volume/datastore/dataset/small-mv.sql:/opt/proteus-lobsters/small-mv.sql
+      - ${HOME}/volume/datastore/dataset/med-mv.sql:/opt/proteus-lobsters/med-mv.sql
+      - ${HOME}/volume/datastore/build/db-schema/schema-lobsters.sql:/opt/proteus-lobsters/schema-lobsters.sql
+      - ${HOME}/volume/datastore/build/maxconn.cnf:/etc/mysql/conf.d/maxconn.cnf
+    ports:
+      - 3307:3306
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints: [ node.labels.placement_datastore == true ]
