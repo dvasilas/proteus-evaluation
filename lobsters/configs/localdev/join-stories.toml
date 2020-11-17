@@ -1,4 +1,5 @@
 operator = "join"
+subOperator = "test1"
 state = "materialized_view"
 port = "50350"
 
@@ -51,7 +52,7 @@ joinAttribute = "story_id"
 
 [Evaluation]
 tracing = false
-logTimestamps = true
+logTimestamps = false
 measureNotificationLatency = true
 
 [[connections]]

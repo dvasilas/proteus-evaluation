@@ -17,7 +17,7 @@ remote() {
 sync() {
 	rsync -a $BENCH_DIR/datastore/ ~/volume/datastore
 	rsync -a $BENCH_DIR/configs/ ~/volume/configs
-	for host in "$@"
+	for ((i = 0; i < ${#nodes[@]}; i++))
 	do
 		rsync -a ~/volume/ $host:~/volume
 	done
@@ -41,7 +41,7 @@ wait_service_running() {
 		sleep 1
 		status=$(get_service_status $1)
 		echo $status
-		if [[ $status == Running* ]] 
+		if [[ $status == Running* ]]
 		then
 			break
 		fi
