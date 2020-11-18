@@ -53,8 +53,6 @@ for ((i = 0; i < ${#runParams[@]}; i++)) ; do
 	echo "Datastore image tag : $tag_datastore" >> /tmp/$logfile
 	echo "Proteus image tag : $tag_qpu" >> /tmp/$logfile
 
-	$bench -c $bench_conf -d >> /tmp/$logfile
-
 	env TAG_DATASTORE=$tag_datastore docker stack deploy --compose-file $deployment $datastore_stack
 
 	wait_services_running

@@ -2,6 +2,11 @@ operator = "join"
 state = "materialized_view"
 port = "50350"
 
+[ProcessingConfig.API]
+maxWorkers = 4
+maxJobQueue = 10000
+
+[ProcessingConfig.Input]
 maxWorkers = 4
 maxJobQueue = 10000
 
