@@ -1,6 +1,6 @@
-REPO := dvasilas/proteus-lobsters
+REPO := 127.0.0.1:5000/proteus-lobsters
 TAG := $(shell git log -1 --pretty=%H | cut -c1-8)
-IMG := ${REPO_DATASTORE}:${TAG}
+IMG := ${REPO}:${TAG}
 
 .PHONY: image-build
 ## image-build:
