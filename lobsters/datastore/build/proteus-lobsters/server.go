@@ -132,8 +132,10 @@ ILOOP:
 				chunk := data[:idx+1]
 				var msg MsgTable
 				if err := json.Unmarshal([]byte(chunk), &msg); err != nil {
-					log.Printf("json.Unmarshal failed:%s %s\n", err, chunk)
-					os.Exit(1)
+					log.Printf("json.Unmarshal failed: %s %s\n", err, chunk)
+					if !strings.Contains(err.Error(), "end of JSON input") {
+						os.Exit(1)
+					}
 				}
 				if ch, f := s.activeConnections[msg.Table]; f {
 					ch <- chunk
