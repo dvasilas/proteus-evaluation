@@ -30,3 +30,7 @@ Total throughput
 [notificationLatency-join] p90(ms)
 [notificationLatency-join] p95(ms)
 [notificationLatency-join] p99(ms)
+[freshnessLatency-join] p50(ms)
+[freshnessLatency-join] p90(ms)
+[freshnessLatency-join] p95(ms)
+[freshnessLatency-join] p99(ms)
