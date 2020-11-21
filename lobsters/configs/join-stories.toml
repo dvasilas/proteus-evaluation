@@ -64,7 +64,7 @@ measureDataTransfer = true
 address = "dsdriver:50150"
 measureDataTransfer = false
 [[connections]]
-address = "sum-stories:50250"
+address = "sum:50250"
 measureDataTransfer = true
 
 [StateBackend]

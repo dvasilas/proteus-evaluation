@@ -63,8 +63,8 @@ measureDataTransfer = false
 
 [DatastoreConfig]
 type = "mysql"
-endpoint = "datastore-proteus:3306"
-logStreamEndpoint = "datastore-proteus:50000"
+endpoint = "datastore:3306"
+logStreamEndpoint = "datastore:50000"
 DBName = "proteus_lobsters_db"
 [DatastoreConfig.Credentials]
 accessKeyID = "root"

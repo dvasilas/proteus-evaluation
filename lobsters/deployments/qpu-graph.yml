@@ -20,7 +20,7 @@ services:
           - node.labels.dc == 1
           - node.labels.client == true
 
-  sum-stories:
+  sum:
 #    image: dvasilas/proteus:${TAG_QPU}
     image: 127.0.0.1:5000/proteus:${TAG_QPU}
     networks:
@@ -40,7 +40,7 @@ services:
           - node.labels.dc == 1
           - node.labels.client == true
 
-  join-stories:
+  join:
 #    image: dvasilas/proteus:${TAG_QPU} 
     image: 127.0.0.1:5000/proteus:${TAG_QPU}
     networks:
