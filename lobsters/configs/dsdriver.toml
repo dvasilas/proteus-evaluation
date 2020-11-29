@@ -59,6 +59,7 @@ type = "string"
 tracing = false
 logTimestamps = false
 measureNotificationLatency = true
+measureDataTransfer = false
 
 [DatastoreConfig]
 type = "mysql"

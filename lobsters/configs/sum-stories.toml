@@ -30,10 +30,11 @@ GroupBy = "story_id"
 tracing = false
 logTimestamps = false
 measureNotificationLatency = true
+measureDataTransfer = true
 
 [[connections]]
 address = "dsdriver:50150"
-local = "local"
+measureDataTransfer = false
 
 [StateBackend]
 endpoint = "127.0.0.1:3306"

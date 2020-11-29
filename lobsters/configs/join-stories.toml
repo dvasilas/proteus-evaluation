@@ -58,13 +58,14 @@ joinAttribute = "story_id"
 tracing = false
 logTimestamps = true
 measureNotificationLatency = true
+measureDataTransfer = true
 
 [[connections]]
 address = "dsdriver:50150"
-local = "local"
+measureDataTransfer = false
 [[connections]]
 address = "sum-stories:50250"
-local = "local"
+measureDataTransfer = true
 
 [StateBackend]
 endpoint = "127.0.0.1:3306"
