@@ -1,7 +1,9 @@
 version: '3'
 services:
-  datastore-mv:
+  datastore:
     image: mysql:latest
+    networks:
+      - proteus_net
     environment:
       - MYSQL_ROOT_PASSWORD=verySecretPwd
     volumes:
@@ -10,10 +12,24 @@ services:
       - ${HOME}/volume/datastore/dataset/med-mv.sql:/opt/proteus-lobsters/med-mv.sql
       - ${HOME}/volume/datastore/build/db-schema/schema-lobsters.sql:/opt/proteus-lobsters/schema-lobsters.sql
       - ${HOME}/volume/datastore/build/maxconn.cnf:/etc/mysql/conf.d/maxconn.cnf
-    ports:
-      - 3307:3306
     deploy:
       restart_policy:
         condition: none
       placement:
         constraints: [ node.labels.placement_datastore == true ]
+  bench:
+    image: 127.0.0.1:5000/lobsters-bench:${TAG_BENCH}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/go/proteus-lobsters-bench/config/config-mysql.toml:/config/config.toml 
+      - /tmp:/out 
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints: [ node.labels.client == true ]
+
+networks:
+  proteus_net:
+    external: true
