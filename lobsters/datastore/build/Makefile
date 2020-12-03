@@ -7,9 +7,9 @@ IMG := ${REPO}:${TAG}
 image-build:
 	docker build -t datastore/proteus .
 
-.PHONY: image-push
-## image-push: Pushes iamges to docker hub
-image-push:
+.PHONY: image-push-registry
+## image-push-registry: Pushes the image to the local registry
+image-push-registry:
 	docker tag datastore/proteus ${IMG}
 	docker push ${IMG}
 
