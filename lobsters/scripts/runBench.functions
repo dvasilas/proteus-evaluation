@@ -9,7 +9,8 @@ sync() {
 	rsync -a $eval_dir/configs/ ~/volume/configs
 	for ((i = 0; i < ${#nodes[@]}; i++))
 	do
-		rsync -a ~/volume/ $host:~/volume
+		echo ${nodes[i]}
+		rsync -a ~/volume/ ${nodes[i]}:~/volume
 	done
 }
 
