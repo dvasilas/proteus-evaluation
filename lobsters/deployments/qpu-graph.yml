@@ -1,45 +1,56 @@
 version: '3'
 services:
+  datastore:
+    #image: dvasilas/proteus-lobsters:${TAG_DATASTORE}
+    image: 127.0.0.1:5000/proteus-lobsters:${TAG_DATASTORE}
+    networks:
+      - proteus_net
+    environment:
+      - MYSQL_ROOT_PASSWORD=verySecretPwd
+    volumes:
+      - ${HOME}/volume/datastore/build/setup-proteus.sh:/docker-entrypoint-initdb.d/setup.sh
+      - ${HOME}/volume/datastore/dataset/large_nocom.sql:/opt/proteus-lobsters/large_nocom.sql
+      - ${HOME}/volume/datastore/build/db-schema/schema-proteus.sql:/opt/proteus-lobsters/schema-proteus.sql
+    cap_add:
+      - SYS_NICE
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
   dsdriver:
 #    image: dvasilas/proteus:${TAG_QPU}
-    image: 127.0.0.1:5000/proteus:${TAG_QPU}
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
     networks:
       - proteus_net
     environment:
       - MYSQL_PASSWORD=verySecrectQPUPwd
     volumes:
       - ${HOME}/volume/configs:/configs
-    ports:
-      - 50150:50150
     command: /configs/dsdriver.toml error
     deploy:
       restart_policy:
         condition: none
       placement:
         constraints:
-          - node.labels.dc == 1
-          - node.labels.client == true
-
+          - node.labels.cloud == true
   sum:
 #    image: dvasilas/proteus:${TAG_QPU}
-    image: 127.0.0.1:5000/proteus:${TAG_QPU}
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
     networks:
       - proteus_net
     environment:
       - MYSQL_PASSWORD=verySecrectQPUPwd
     volumes:
       - ${HOME}/volume/configs:/configs
-    ports:
-      - 50250:50250
     command: /configs/sum-stories.toml error
     deploy:
       restart_policy:
         condition: none
       placement:
         constraints:
-          - node.labels.dc == 1
-          - node.labels.client == true
-
+          - node.labels.cloud == true
   join:
 #    image: dvasilas/proteus:${TAG_QPU} 
     image: 127.0.0.1:5000/proteus:${TAG_QPU}
@@ -49,16 +60,24 @@ services:
       - MYSQL_PASSWORD=verySecrectQPUPwd
     volumes:
       - ${HOME}/volume/configs:/configs
-    ports:
-      - 50350:50350
     command: /configs/join-stories.toml error
     deploy:
       restart_policy:
         condition: none
       placement:
-        constraints:
-          - node.labels.dc == 1
-          - node.labels.client == true
+        constraints: [ node.labels.client == true ]
+  bench:
+    image: 127.0.0.1:5000/lobsters-bench:${TAG_BENCH}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/go/proteus-lobsters-bench/config/config-proteus.toml:/config/config.toml 
+      - /tmp:/out 
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints: [ node.labels.client == true ]
 
 networks:
   proteus_net:

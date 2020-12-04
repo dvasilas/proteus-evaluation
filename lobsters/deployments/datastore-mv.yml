@@ -2,14 +2,14 @@ version: '3'
 services:
   datastore:
     image: mysql:latest
+    #image: 127.0.0.1:5000/proteus-lobsters:${TAG_DATASTORE}
     networks:
       - proteus_net
     environment:
       - MYSQL_ROOT_PASSWORD=verySecretPwd
     volumes:
       - ${HOME}/volume/datastore/build/setup-lobsters.sh:/docker-entrypoint-initdb.d/setup.sh
-      - ${HOME}/volume/datastore/dataset/small-mv.sql:/opt/proteus-lobsters/small-mv.sql
-      - ${HOME}/volume/datastore/dataset/med-mv.sql:/opt/proteus-lobsters/med-mv.sql
+      - ${HOME}/volume/datastore/dataset/large_nocom-mv.sql:/opt/proteus-lobsters/large_nocom-mv.sql
       - ${HOME}/volume/datastore/build/db-schema/schema-lobsters.sql:/opt/proteus-lobsters/schema-lobsters.sql
       - ${HOME}/volume/datastore/build/maxconn.cnf:/etc/mysql/conf.d/maxconn.cnf
     deploy:
