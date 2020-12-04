@@ -29,8 +29,8 @@ GroupBy = "story_id"
 [Evaluation]
 tracing = false
 logTimestamps = false
-measureNotificationLatency = true
-measureDataTransfer = true
+measureNotificationLatency = false
+measureDataTransfer = false
 
 [[connections]]
 address = "dsdriver:50150"

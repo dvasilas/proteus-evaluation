@@ -58,7 +58,7 @@ type = "string"
 [Evaluation]
 tracing = false
 logTimestamps = false
-measureNotificationLatency = true
+measureNotificationLatency = false
 measureDataTransfer = false
 
 [DatastoreConfig]

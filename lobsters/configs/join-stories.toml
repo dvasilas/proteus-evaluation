@@ -3,11 +3,11 @@ state = "materialized_view"
 port = "50350"
 
 [ProcessingConfig.API]
-maxWorkers = 4
+maxWorkers = 6
 maxJobQueue = 10000
 
 [ProcessingConfig.Input]
-maxWorkers = 4
+maxWorkers = 2
 maxJobQueue = 10000
 
 [[InputSchema]]
@@ -56,16 +56,16 @@ joinAttribute = "story_id"
 
 [Evaluation]
 tracing = false
-logTimestamps = true
-measureNotificationLatency = true
-measureDataTransfer = true
+logTimestamps = false
+measureNotificationLatency = false
+measureDataTransfer = false
 
 [[connections]]
 address = "dsdriver:50150"
 measureDataTransfer = false
 [[connections]]
 address = "sum:50250"
-measureDataTransfer = true
+measureDataTransfer = false
 
 [StateBackend]
 endpoint = "127.0.0.1:3306"
