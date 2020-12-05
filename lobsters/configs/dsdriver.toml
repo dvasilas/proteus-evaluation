@@ -2,6 +2,8 @@ operator = "db_driver"
 state = "stateless"
 port = "50150"
 
+[ProcessingConfig]
+grpcServers = 1
 [ProcessingConfig.API]
 maxWorkers = 4
 maxJobQueue = 10000

@@ -3,6 +3,8 @@ subOperator = "test1"
 state = "materialized_view"
 port = "50350"
 
+[ProcessingConfig]
+grpcServers = 10
 [ProcessingConfig.API]
 maxWorkers = 4
 maxJobQueue = 10000
@@ -57,9 +59,9 @@ joinAttribute = "story_id"
 
 [Evaluation]
 tracing = false
-logTimestamps = true
-measureNotificationLatency = true
-measureDataTransfer = true
+logTimestamps = false
+measureNotificationLatency = false
+measureDataTransfer = false
 
 [[connections]]
 address = "127.0.0.1:50150"

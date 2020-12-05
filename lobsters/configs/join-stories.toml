@@ -2,6 +2,8 @@ operator = "join"
 state = "materialized_view"
 port = "50350"
 
+[ProcessingConfig]
+grpcServers = 10
 [ProcessingConfig.API]
 maxWorkers = 6
 maxJobQueue = 10000

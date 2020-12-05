@@ -2,6 +2,8 @@ operator = "aggregation"
 state = "materialized_view"
 port = "50250"
 
+[ProcessingConfig]
+grpcServers = 1
 [ProcessingConfig.API]
 maxWorkers = 4
 maxJobQueue = 10000
