@@ -55,7 +55,9 @@ for ((i = 0; i < ${#runParams[@]}; i++)) ; do
 
 	set -- ${runParams[$i]}
 
-	logfile=$(timestamp_filename).txt
+	logfile=$(timestamp_filename)
+	logfile1=$logfile.1.txt
+	logfile2=$logfile.2.txt
 
 	echo "Timestamp: $(timestamp)" > /tmp/$logfile
 	echo "Datastore image tag : $tag_datastore" >> /tmp/$logfile
@@ -78,6 +80,7 @@ for ((i = 0; i < ${#runParams[@]}; i++)) ; do
 		exit 1
 	fi
 
+	docker service scale proteus_join=3
 	sleep 10
 
 	if [ $system == "proteus" ] ; then
@@ -99,9 +102,13 @@ for ((i = 0; i < ${#runParams[@]}; i++)) ; do
 #		sleep 10
 #		docker exec bench /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 > /tmp/$logfile
 #		./utils/service-exec.sh -s mysql_bench -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 >> /tmp/$logfile
-		./utils/service-exec.sh -s proteus_bench -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 >> /tmp/$logfile
+		./utils/service-exec.sh -s proteus_bench1 -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 &
+		./utils/service-exec.sh -s proteus_bench2 -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 
 
-	curl -u $NUAGE_LIP6_U:$NUAGE_LIP6_P -T /tmp/$logfile https://nuage.lip6.fr/remote.php/dav/files/$NUAGE_LIP6_U/proteus_bench_logs/$logfile
+
+		sleep 20
+
+#	curl -u $NUAGE_LIP6_U:$NUAGE_LIP6_P -T /tmp/$logfile https://nuage.lip6.fr/remote.php/dav/files/$NUAGE_LIP6_U/proteus_bench_logs/$logfile
 		
 	if [ $deployment == "swarm" ] ; then
 		docker stack rm qpu-graph

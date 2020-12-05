@@ -7,6 +7,7 @@ build() {
 sync() {
 	rsync -a $eval_dir/datastore/ ~/volume/datastore
 	rsync -a $eval_dir/configs/ ~/volume/configs
+	rsync -a $bench_dir/config/ ~/volume/bench/config
 	for ((i = 0; i < ${#nodes[@]}; i++))
 	do
 		echo ${nodes[i]}
