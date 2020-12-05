@@ -65,19 +65,31 @@ services:
       restart_policy:
         condition: none
       placement:
-        constraints: [ node.labels.client == true ]
-  bench:
+        constraints: [ node.labels.cloud1 == true ]
+  bench1:
     image: 127.0.0.1:5000/lobsters-bench:${TAG_BENCH}
     networks:
       - proteus_net
     volumes:
-      - ${HOME}/go/proteus-lobsters-bench/config/config-proteus.toml:/config/config.toml 
+      - ${HOME}/volume/bench/config/config-proteus.toml:/config/config.toml 
       - /tmp:/out 
     deploy:
       restart_policy:
         condition: none
       placement:
         constraints: [ node.labels.client == true ]
+  bench2:
+    image: 127.0.0.1:5000/lobsters-bench:${TAG_BENCH}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/volume/bench/config/config-proteus.toml:/config/config.toml 
+      - /tmp:/out 
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints: [ node.labels.client1 == true ]
 
 networks:
   proteus_net:
