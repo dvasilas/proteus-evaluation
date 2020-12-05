@@ -22,8 +22,8 @@ services:
     networks:
       - proteus_net
     volumes:
-      - ${HOME}/go/proteus-lobsters-bench/config/config-mysql.toml:/config/config.toml 
-      - /tmp:/out 
+      - ${HOME}/go/proteus-lobsters-bench/config/config-mysql.toml:/config/config.toml
+      - /tmp:/out
     deploy:
       restart_policy:
         condition: none

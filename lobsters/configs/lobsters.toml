@@ -1,0 +1,23 @@
+operator = "lobsters"
+state = "stateless"
+port = "50350"
+
+[ProcessingConfig.API]
+maxWorkers = 6
+maxJobQueue = 10000
+
+[ProcessingConfig.Input]
+maxWorkers = 1
+maxJobQueue = 10000
+
+[Evaluation]
+tracing = false
+logTimestamps = true
+measureNotificationLatency = true
+
+[StateBackend]
+endpoint = "datastore:3306"
+
+[StateBackend.Credentials]
+accessKeyID = "root"
+secretAccessKey = "verySecretPwd"

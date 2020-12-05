@@ -5,13 +5,11 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=verySecretPwd
     volumes:
-      - ${PWD}/build/datastore/lobsters-MySQL/docker-entrypoint-init.d/setup-mv.sh:/docker-entrypoint-initdb.d/setup.sh
-      - ${PWD}/build/datastore/lobsters-MySQL/docker-entrypoint-init.d/proteus-lobsters/schema-mv.sql:/opt/proteus-lobsters/schema-mv.sql
-      - ${PWD}/build/datastore/lobsters-MySQL/dataset/small-mv.sql:/opt/proteus-lobsters/small-mv.sql
-      - ${PWD}/build/datastore/lobsters-MySQL/docker-entrypoint-init.d/maxconn.cnf:/etc/mysql/conf.d/maxconn.cnf
-      # - ${PWD}/build/datastore/lobsters-MySQL/docker-entrypoint-init.d/proteus-lobsters:/opt/proteus-lobsters
+      - ${PWD}/datastore/build/setup-lobsters.sh:/docker-entrypoint-initdb.d/setup.sh
+      - ${PWD}/datastore/build/db-schema/schema-lobsters.sql:/opt/proteus-lobsters/schema-lobsters.sql
+      - ${PWD}/datastore/dataset/small-mv.sql:/opt/proteus-lobsters/small-mv.sql
     ports:
-      - 3309:3306
+      - 3306:3306
     deploy:
       restart_policy:
         condition: none
