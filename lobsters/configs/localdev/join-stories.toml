@@ -4,7 +4,7 @@ state = "materialized_view"
 port = "50350"
 
 [ProcessingConfig]
-grpcServers = 10
+grpcServers = 1
 [ProcessingConfig.API]
 maxWorkers = 4
 maxJobQueue = 10000

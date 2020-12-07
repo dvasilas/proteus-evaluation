@@ -65,7 +65,23 @@ services:
       restart_policy:
         condition: none
       placement:
+        constraints: [ node.labels.cloud == true ]
+ join1:
+#    image: dvasilas/proteus:${TAG_QPU} 
+    image: 127.0.0.1:5000/proteus:${TAG_QPU}
+    networks:
+      - proteus_net
+    environment:
+      - MYSQL_PASSWORD=verySecrectQPUPwd
+    volumes:
+      - ${HOME}/volume/configs:/configs
+    command: /configs/join-stories1.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
         constraints: [ node.labels.cloud1 == true ]
+
   bench1:
     image: 127.0.0.1:5000/lobsters-bench:${TAG_BENCH}
     networks:

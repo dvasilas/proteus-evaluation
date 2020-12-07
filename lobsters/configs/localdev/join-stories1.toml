@@ -1,11 +1,12 @@
 operator = "join"
+subOperator = "test1"
 state = "materialized_view"
-port = "50350"
+port = "50351"
 
 [ProcessingConfig]
 grpcServers = 1
 [ProcessingConfig.API]
-maxWorkers = 6
+maxWorkers = 4
 maxJobQueue = 10000
 
 [ProcessingConfig.Input]
@@ -63,14 +64,14 @@ measureNotificationLatency = false
 measureDataTransfer = false
 
 [[connections]]
-address = "dsdriver:50150"
+address = "127.0.0.1:50150"
 measureDataTransfer = false
 [[connections]]
-address = "sum:50250"
-measureDataTransfer = false
+address = "127.0.0.1:50250"
+measureDataTransfer = true
 
 [StateBackend]
-endpoint = "127.0.0.1:3306"
+endpoint = "127.0.0.1:3308"
 
 [StateBackend.Credentials]
 accessKeyID = "root"
