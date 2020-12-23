@@ -6,16 +6,18 @@ fr_latency_400 = [10.17958,12.92751,18.06492,28.11171,38.7885,48.50991,58.69654,
 
 f, ax = plt.subplots()
 
-ax.plot(netLatency, fr_latency_200, color='k', marker='o', label='1000 requests/s')
-ax.plot(netLatency, fr_latency_400, color='c', marker='s', label='2000 requests/s')
+ax.plot(netLatency, fr_latency_200, color='k', marker='o', label='2000 requests/s')
+ax.plot(netLatency, fr_latency_400, color='c', marker='s', label='4000 requests/s')
 
-ax.set(xlabel='Round-trip time between sites', ylabel='Freshness latency [ms]')
+ax.set_ylim(bottom=0)
+ax.set_xlim(left=0)
+
+ax.set(xlabel='Round-trip time between sites [ms]', ylabel='95-th %-ile update latency [ms]')
 
 ax.grid(linestyle='dotted')
 
 handles, labels = ax.get_legend_handles_labels()
 ax.legend(handles,labels=labels, loc='upper left')
 
-# plt.tight_layout(rect=[0,0.05,1,1])
 plt.savefig('fr_latency_net_latency.png')
 plt.close()
