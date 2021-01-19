@@ -1,0 +1,26 @@
+#!/bin/sh
+set -e
+
+echo "[mysqld]" >> /etc/mysql/my.cnf
+echo "skip-networking=0" >> /etc/mysql/my.cnf
+echo "skip-bind-address" >> /etc/mysql/my.cnf
+
+/usr/bin/mysqld_safe --datadir='/var/lib/mysql' &
+
+while ! nc -z localhost 3306; do
+  sleep 1
+done
+
+/usr/bin/mysqladmin -u root password $MYSQL_ROOT_PASSWORD
+
+/usr/bin/mysqladmin -uroot -p$MYSQL_ROOT_PASSWORD shutdown
+
+/usr/bin/mysqld_safe --datadir='/var/lib/mysql' &
+
+while ! nc -z localhost 3306; do
+  sleep 1
+done
+
+/docker-entrypoint-initdb.d/setup.sh
+
+tail -f /dev/null

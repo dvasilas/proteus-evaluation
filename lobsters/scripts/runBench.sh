@@ -30,6 +30,7 @@ docker stop sum || true
 docker stop dsdriver || true
 docker stop datastore || true
 docker stop bench || true
+docker stop lobsters || true
 
 if [ $system == "mysql" ] ; then
 	bench_conf=$bench_conf_dir/config-mysql.toml
@@ -55,9 +56,9 @@ for ((i = 0; i < ${#runParams[@]}; i++)) ; do
 
 	set -- ${runParams[$i]}
 
-	logfile=$(timestamp_filename)
-	logfile1=$logfile.1.txt
-	logfile2=$logfile.2.txt
+	logfile=$(timestamp_filename).txt
+	#logfile1=$logfile.1.txt
+	#logfile2=$logfile.2.txt
 
 	echo "Timestamp: $(timestamp)" > /tmp/$logfile
 	echo "Datastore image tag : $tag_datastore" >> /tmp/$logfile
@@ -80,7 +81,7 @@ for ((i = 0; i < ${#runParams[@]}; i++)) ; do
 		exit 1
 	fi
 
-	docker service scale proteus_join=3
+#	docker service scale proteus_join=3
 	sleep 10
 
 	if [ $system == "proteus" ] ; then
@@ -88,27 +89,36 @@ for ((i = 0; i < ${#runParams[@]}; i++)) ; do
 			env TAG_QPU=$tag_qpu ./dsdriver.sh
 			env TAG_QPU=$tag_qpu ./sum.sh
 			env TAG_QPU=$tag_qpu ./join.sh
+			env TAG_QPU=$tag_qpu ./lobsters.sh
 			sleep 10
 		fi
 	fi
 
 #		$bench -c $bench_conf -l $1 --fr $2 --fw $3 -t $4 >> /tmp/$logfile
-#		docker run -d --rm --name bench --network test_net --cap-add=NET_ADMIN --volume $HOME/go/proteus-lobsters-bench/config/config-proteus.toml:/config/config.toml --volume $HOME/volume/delay.sh:/delay.sh --volume /tmp:/out 127.0.0.1:5000/lobsters-bench:$tag_bench
+		docker run -d --rm --name bench --network test_net --cap-add=NET_ADMIN --volume $HOME/go/proteus-lobsters-bench/config/config-proteus.toml:/config/config.toml --volume $HOME/volume/delay.sh:/delay.sh --volume /tmp:/out 127.0.0.1:5000/lobsters-bench:$tag_bench
 
 #	docker run -d --rm --name bench --network test_net --cap-add=NET_ADMIN --volume $HOME/go/proteus-lobsters-bench/config/config-mysql.toml:/config/config.toml --volume $HOME/volume/delay.sh:/delay.sh --volume /tmp:/out 127.0.0.1:5000/lobsters-bench:$tag_bench
-#		sleep 10
-#		./simulate-latency.sh bench datastore
-#		./simulate-latency.sh sum join
-#		sleep 10
-#		docker exec bench /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 > /tmp/$logfile
-#		./utils/service-exec.sh -s mysql_bench -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 >> /tmp/$logfile
-		./utils/service-exec.sh -s proteus_bench1 -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 &
-		./utils/service-exec.sh -s proteus_bench2 -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 
+		sleep 10
+		./simulate-latency.sh bench lobsters
+
+#		./simulate-latency.sh bench join
+
+		./simulate-latency.sh sum join
+		sleep 10
+		docker exec bench /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 
+		docker exec bench cat measurements.txt >>  /tmp/$logfile
+#		./utils/service-exec.sh -s proteus_bench -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4
+#		./utils/service-exec.sh -s proteus_bench2 -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4
+#		./utils/service-exec.sh -s proteus_bench2 -- cat measurements.txt >> /tmp/$logfile 
+#		sleep 2
+#		./utils/service-exec.sh -s proteus_bench -- cat measurements.txt >> /tmp/$logfile 
+#		./utils/service-exec.sh -s proteus_bench2 -- cat measurements.txt >> /tmp/$logfile 
+#		./utils/service-exec.sh -s proteus_bench2 -- /app/bench/bin/benchmark -c /config/config.toml -l $1 --fr $2 --fw $3 -t $4 
 
 
-		sleep 20
 
-#	curl -u $NUAGE_LIP6_U:$NUAGE_LIP6_P -T /tmp/$logfile https://nuage.lip6.fr/remote.php/dav/files/$NUAGE_LIP6_U/proteus_bench_logs/$logfile
+
+	curl -u $NUAGE_LIP6_U:$NUAGE_LIP6_P -T /tmp/$logfile https://nuage.lip6.fr/remote.php/dav/files/$NUAGE_LIP6_U/proteus_bench_logs/$logfile
 		
 	if [ $deployment == "swarm" ] ; then
 		docker stack rm qpu-graph
@@ -118,6 +128,7 @@ for ((i = 0; i < ${#runParams[@]}; i++)) ; do
 		docker stop dsdriver || true
 		docker stop datastore || true
 		docker stop bench || true
+		docker stop lobsters || true
 	else
 		echo "Expecting either 'swarm' or 'local' as 'deployment' argument"
 		exit 1
@@ -125,11 +136,6 @@ for ((i = 0; i < ${#runParams[@]}; i++)) ; do
 
 	if [ $deployment == "swarm" ] ; then
 		docker stack rm $datastore_stack
-	elif [ $deployment == "local" ] ; then
-		docker stop datastore
-	else
-		echo "Expecting either 'swarm' or 'local' as 'deployment' argument"
-		exit 1
 	fi
 
 	sleep 10

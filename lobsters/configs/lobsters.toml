@@ -2,6 +2,8 @@ operator = "lobsters"
 state = "stateless"
 port = "50350"
 
+[ProcessingConfig]
+grpcServers = 1
 [ProcessingConfig.API]
 maxWorkers = 6
 maxJobQueue = 10000
