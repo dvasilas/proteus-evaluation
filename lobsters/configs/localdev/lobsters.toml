@@ -1,15 +1,16 @@
 operator = "lobsters"
 state = "stateless"
-port = "50350"
+port = "50351"
 
+[ProcessingConfig]
+grpcServers = 1
 [ProcessingConfig.API]
-maxWorkers = 6
+maxWorkers = 4
 maxJobQueue = 10000
 
 [ProcessingConfig.Input]
-maxWorkers = 1
+maxWorkers = 2
 maxJobQueue = 10000
-
 
 [Evaluation]
 tracing = false
@@ -17,7 +18,7 @@ logTimestamps = true
 measureNotificationLatency = true
 
 [StateBackend]
-endpoint = "127.0.0.1:3306"
+endpoint = "127.0.0.1:3307"
 
 [StateBackend.Credentials]
 accessKeyID = "root"

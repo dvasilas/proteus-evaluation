@@ -42,3 +42,6 @@ Total throughput
 [FreshnessVersions-join] 1
 [FreshnessVersions-join] 2
 [FreshnessVersions-join] 4
+[DataTransfer-dsdriver]
+[DataTransfer-sum]
+[DataTransfer-join]
