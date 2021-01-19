@@ -28,12 +28,12 @@ measureNotificationLatency = false
 measureDataTransfer = false
 
 [StateBackend]
-endpoint = "mongodb://localhost:27017"
+endpoint = "mongodb://mongo:27017"
 
 [StateBackend.Credentials]
 accessKeyID = "root"
 secretAccessKey = "example"
 
 [[connections]]
-address = "127.0.0.1:50150"
+address = "dsdriver:50150"
 local = "local"
