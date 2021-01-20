@@ -1,0 +1,41 @@
+operator = "index"
+state = "stateless"
+port = "50350"
+
+[ProcessingConfig]
+grpcServers = 1
+[ProcessingConfig.API]
+maxWorkers = 4
+maxJobQueue = 10000
+
+[ProcessingConfig.Input]
+maxWorkers = 2
+maxJobQueue = 10000
+
+# [[InputSchema]]
+# table = "ycsbbuck"
+# [[InputSchema.Attributes]]
+# key = "attribute0"
+# type = "int"
+[[InputSchema]]
+table = "testbuck"
+[[InputSchema.Attributes]]
+key = "attribute0"
+type = "int"
+
+[Evaluation]
+tracing = false
+logTimestamps = false
+measureNotificationLatency = false
+measureDataTransfer = false
+
+[StateBackend]
+endpoint = "mongodb://mongo-0:27017"
+
+[StateBackend.Credentials]
+accessKeyID = "root"
+secretAccessKey = "example"
+
+[[connections]]
+address = "dsdriver-0:50150"
+local = "local"

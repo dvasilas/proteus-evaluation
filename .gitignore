@@ -1,3 +1,5 @@
 **/token*
 
 **/dataset/*.sql
+
+.DS_Store

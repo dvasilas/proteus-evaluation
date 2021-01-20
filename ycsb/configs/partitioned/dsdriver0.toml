@@ -12,20 +12,13 @@ maxJobQueue = 10000
 maxWorkers = 2
 maxJobQueue = 10000
 
+# [[InputSchema]]
+# table = "ycsbbuck"
+# [[InputSchema.Attributes]]
+# key = "attribute0"
+# type = "int"
 [[InputSchema]]
-table = "ycsbbuck"
-[[InputSchema.Attributes]]
-key = "x"
-type = "int"
-[[InputSchema.Attributes]]
-key = "attribute0"
-type = "int"
-
-[[InputSchema]]
-table = "buck"
-[[InputSchema.Attributes]]
-key = "x"
-type = "int"
+table = "testbuck"
 [[InputSchema.Attributes]]
 key = "attribute0"
 type = "int"
@@ -38,8 +31,8 @@ measureDataTransfer = false
 
 [DatastoreConfig]
 type = "s3"
-endpoint = "localhost:8001"
-logStreamEndpoint = "127.0.0.1:50001"
+endpoint = "http://cloudserver-0:8000"
+logStreamEndpoint = "cloudserver-0:50000"
 [DatastoreConfig.Credentials]
 accessKeyID = "accessKey1"
 secretAccessKey = "verySecretKey1"

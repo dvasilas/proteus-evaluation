@@ -1,0 +1,38 @@
+operator = "db_driver"
+state = "stateless"
+port = "50150"
+
+[ProcessingConfig]
+grpcServers = 1
+[ProcessingConfig.API]
+maxWorkers = 4
+maxJobQueue = 10000
+
+[ProcessingConfig.Input]
+maxWorkers = 2
+maxJobQueue = 10000
+
+# [[InputSchema]]
+# table = "ycsbbuck"
+# [[InputSchema.Attributes]]
+# key = "attribute0"
+# type = "int"
+[[InputSchema]]
+table = "testbuck"
+[[InputSchema.Attributes]]
+key = "attribute0"
+type = "int"
+
+[Evaluation]
+tracing = false
+logTimestamps = false
+measureNotificationLatency = false
+measureDataTransfer = false
+
+[DatastoreConfig]
+type = "s3"
+endpoint = "http://cloudserver-1:8000"
+logStreamEndpoint = "cloudserver-1:50000"
+[DatastoreConfig.Credentials]
+accessKeyID = "accessKey1"
+secretAccessKey = "verySecretKey1"
