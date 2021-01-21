@@ -32,5 +32,8 @@ accessKeyID = "root"
 secretAccessKey = "example"
 
 [[connections]]
+address = "127.0.0.1:50150"
+local = "local"
+[[connections]]
 address = "127.0.0.1:50160"
 local = "local"

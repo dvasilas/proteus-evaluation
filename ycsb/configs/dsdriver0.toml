@@ -1,6 +1,6 @@
-operator = "index"
+operator = "db_driver"
 state = "stateless"
-port = "50360"
+port = "50150"
 
 [ProcessingConfig]
 grpcServers = 1
@@ -24,13 +24,10 @@ logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
 
-[StateBackend]
-endpoint = "mongodb://127.0.0.1:27017"
-
-[StateBackend.Credentials]
-accessKeyID = "root"
-secretAccessKey = "example"
-
-[[connections]]
-address = "127.0.0.1:50160"
-local = "local"
+[DatastoreConfig]
+type = "s3"
+endpoint = "http://cloudserver-0:8000"
+logStreamEndpoint = "cloudserver-0:50000"
+[DatastoreConfig.Credentials]
+accessKeyID = "accessKey1"
+secretAccessKey = "verySecretKey1"

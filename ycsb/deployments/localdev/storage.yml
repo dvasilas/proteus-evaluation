@@ -1,0 +1,52 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  cloudserver-0:
+    image: dvasilas/cloudserver:latest
+    networks:
+      - proteus_net
+    ports:
+      - 8000:8000
+      - 50000:50000
+    environment:
+      - REMOTE_MANAGEMENT_DISABLE=1
+      - S3BACKEND=file
+      - SCALITY_ACCESS_KEY_ID=accessKey1
+      - SCALITY_SECRET_ACCESS_KEY=verySecretKey1
+    volumes:
+      - ${PWD}/datastore/dataset/data1:/usr/src/app/localData
+      - ${PWD}/datastore/dataset/metadata1:/usr/src/app/localMetadata
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  cloudserver-1:
+    image: dvasilas/cloudserver:latest
+    networks:
+      - proteus_net
+    ports:
+      - 8001:8000
+      - 50001:50000
+    environment:
+      - REMOTE_MANAGEMENT_DISABLE=1
+      - S3BACKEND=file
+      - SCALITY_ACCESS_KEY_ID=accessKey1
+      - SCALITY_SECRET_ACCESS_KEY=verySecretKey1
+    volumes:
+      - ${PWD}/datastore/dataset/data2:/usr/src/app/localData
+      - ${PWD}/datastore/dataset/metadata2:/usr/src/app/localMetadata
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+networks:
+  qpu_graph:
+  proteus_net:
+    external: true

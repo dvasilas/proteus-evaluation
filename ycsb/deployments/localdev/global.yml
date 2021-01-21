@@ -1,0 +1,128 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  mongo-0:
+    image: mongo
+    networks:
+      - proteus_net
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  mongo-1:
+    image: mongo
+    networks:
+      - proteus_net
+    ports:
+      - 27018:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  dsdriver-0:
+    image: qpu/stateless
+    networks:
+      - proteus_net
+    volumes:
+      - ${PWD}/configs:/configs
+    command: /configs/dsdriver0.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  dsdriver-1:
+    image: qpu/stateless
+    networks:
+      - proteus_net
+    volumes:
+      - ${PWD}/configs:/configs
+    command: /configs/dsdriver1.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  index-0:
+    image: qpu/stateless
+    networks:
+      - proteus_net
+    volumes:
+      - ${PWD}/configs:/configs
+    command: /configs/global/index0.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  index-1:
+    image: qpu/stateless
+    networks:
+      - proteus_net
+    volumes:
+      - ${PWD}/configs:/configs
+    command: /configs/global/index1.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  router-0:
+    image: qpu/stateless
+    networks:
+      - proteus_net
+    ports:
+      - 50450:50450
+    volumes:
+      - ${PWD}/configs:/configs
+    command: /configs/global/router0.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  router-1:
+    image: qpu/stateless
+    networks:
+      - proteus_net
+    ports:
+      - 50460:50450
+    volumes:
+      - ${PWD}/configs:/configs
+    command: /configs/global/router1.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+networks:
+  qpu_graph:
+  proteus_net:
+    external: true

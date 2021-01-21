@@ -1,6 +1,6 @@
 operator = "index"
 state = "stateless"
-port = "50360"
+port = "50350"
 
 [ProcessingConfig]
 grpcServers = 1
@@ -25,12 +25,15 @@ measureNotificationLatency = false
 measureDataTransfer = false
 
 [StateBackend]
-endpoint = "mongodb://127.0.0.1:27017"
+endpoint = "mongodb://mongo-0:27017"
 
 [StateBackend.Credentials]
 accessKeyID = "root"
 secretAccessKey = "example"
 
 [[connections]]
-address = "127.0.0.1:50160"
+address = "dsdriver-0:50150"
+local = "local"
+[[connections]]
+address = "dsdriver-1:50150"
 local = "local"

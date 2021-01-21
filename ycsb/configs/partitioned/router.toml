@@ -1,6 +1,6 @@
-operator = "index"
+operator = "router"
 state = "stateless"
-port = "50360"
+port = "50450"
 
 [ProcessingConfig]
 grpcServers = 1
@@ -24,13 +24,9 @@ logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
 
-[StateBackend]
-endpoint = "mongodb://127.0.0.1:27017"
-
-[StateBackend.Credentials]
-accessKeyID = "root"
-secretAccessKey = "example"
-
 [[connections]]
-address = "127.0.0.1:50160"
+address = "index-0:50350"
+local = "local"
+[[connections]]
+address = "index-1:50350"
 local = "local"

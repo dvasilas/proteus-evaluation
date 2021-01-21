@@ -1,6 +1,6 @@
-operator = "db_driver"
+operator = "index"
 state = "stateless"
-port = "50150"
+port = "50350"
 
 [ProcessingConfig]
 grpcServers = 1
@@ -12,11 +12,6 @@ maxJobQueue = 10000
 maxWorkers = 2
 maxJobQueue = 10000
 
-# [[InputSchema]]
-# table = "ycsbbuck"
-# [[InputSchema.Attributes]]
-# key = "attribute0"
-# type = "int"
 [[InputSchema]]
 table = "testbuck"
 [[InputSchema.Attributes]]
@@ -29,10 +24,16 @@ logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
 
-[DatastoreConfig]
-type = "s3"
-endpoint = "http://cloudserver-1:8000"
-logStreamEndpoint = "cloudserver-1:50000"
-[DatastoreConfig.Credentials]
-accessKeyID = "accessKey1"
-secretAccessKey = "verySecretKey1"
+[StateBackend]
+endpoint = "mongodb://mongo-1:27017"
+
+[StateBackend.Credentials]
+accessKeyID = "root"
+secretAccessKey = "example"
+
+[[connections]]
+address = "dsdriver-0:50150"
+local = "local"
+[[connections]]
+address = "dsdriver-1:50150"
+local = "local"

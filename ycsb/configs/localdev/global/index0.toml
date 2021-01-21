@@ -1,6 +1,6 @@
 operator = "index"
 state = "stateless"
-port = "50360"
+port = "50350"
 
 [ProcessingConfig]
 grpcServers = 1
@@ -11,6 +11,7 @@ maxJobQueue = 10000
 [ProcessingConfig.Input]
 maxWorkers = 2
 maxJobQueue = 10000
+
 
 [[InputSchema]]
 table = "testbuck"
@@ -31,6 +32,9 @@ endpoint = "mongodb://127.0.0.1:27017"
 accessKeyID = "root"
 secretAccessKey = "example"
 
+[[connections]]
+address = "127.0.0.1:50150"
+local = "local"
 [[connections]]
 address = "127.0.0.1:50160"
 local = "local"

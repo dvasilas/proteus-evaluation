@@ -12,11 +12,6 @@ maxJobQueue = 10000
 maxWorkers = 2
 maxJobQueue = 10000
 
-# [[InputSchema]]
-# table = "ycsbbuck"
-# [[InputSchema.Attributes]]
-# key = "attribute0"
-# type = "int"
 [[InputSchema]]
 table = "testbuck"
 [[InputSchema.Attributes]]
