@@ -1,6 +1,6 @@
-operator = "db_driver"
+operator = "inMemIndex"
 state = "stateless"
-port = "50150"
+port = "50350"
 
 [ProcessingConfig]
 grpcServers = 1
@@ -24,10 +24,6 @@ logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
 
-[DatastoreConfig]
-type = "mongo"
-endpoint = "mongodb://127.0.0.1:27017/?replicaSet=rs0"
-dbname = "testCollection"
-[DatastoreConfig.Credentials]
-accessKeyID = "root"
-secretAccessKey = "example"
+[[connections]]
+address = "127.0.0.1:50150"
+local = "local"

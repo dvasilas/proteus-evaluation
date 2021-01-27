@@ -2,49 +2,68 @@
 version: '3.1'
 
 services:
-  cloudserver-0:
-    image: dvasilas/cloudserver:latest
+  mongodb:
+    image: mongo
+    container_name: mongo0
+    hostname: mongo0
     networks:
       - proteus_net
     ports:
-      - 8000:8000
-      - 50000:50000
+      - 27017:27017
     environment:
-      - REMOTE_MANAGEMENT_DISABLE=1
-      - S3BACKEND=file
-      - SCALITY_ACCESS_KEY_ID=accessKey1
-      - SCALITY_SECRET_ACCESS_KEY=verySecretKey1
-    volumes:
-      - ${PWD}/datastore/dataset/data1:/usr/src/app/localData
-      - ${PWD}/datastore/dataset/metadata1:/usr/src/app/localMetadata
-    deploy:
-      restart_policy:
-        condition: none
-      placement:
-        constraints:
-          - node.labels.cloud == true
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: db
+      MONGO_REPLICA_SET_NAME: rs0
+    healthcheck:
+      test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongo -u root -p example --quiet) -eq 1
+      interval: 10s
+      start_period: 30s
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+# version: '3.1'
+  # cloudserver-0:
+  #   image: dvasilas/cloudserver:latest
+  #   networks:
+  #     - proteus_net
+  #   ports:
+  #     - 8000:8000
+  #     - 50000:50000
+  #   environment:
+  #     - REMOTE_MANAGEMENT_DISABLE=1
+  #     - S3BACKEND=file
+  #     - SCALITY_ACCESS_KEY_ID=accessKey1
+  #     - SCALITY_SECRET_ACCESS_KEY=verySecretKey1
+  #   volumes:
+  #     - ${PWD}/datastore/dataset/data1:/usr/src/app/localData
+  #     - ${PWD}/datastore/dataset/metadata1:/usr/src/app/localMetadata
+  #   deploy:
+  #     restart_policy:
+  #       condition: none
+  #     placement:
+  #       constraints:
+  #         - node.labels.cloud == true
 
-  cloudserver-1:
-    image: dvasilas/cloudserver:latest
-    networks:
-      - proteus_net
-    ports:
-      - 8001:8000
-      - 50001:50000
-    environment:
-      - REMOTE_MANAGEMENT_DISABLE=1
-      - S3BACKEND=file
-      - SCALITY_ACCESS_KEY_ID=accessKey1
-      - SCALITY_SECRET_ACCESS_KEY=verySecretKey1
-    volumes:
-      - ${PWD}/datastore/dataset/data2:/usr/src/app/localData
-      - ${PWD}/datastore/dataset/metadata2:/usr/src/app/localMetadata
-    deploy:
-      restart_policy:
-        condition: none
-      placement:
-        constraints:
-          - node.labels.cloud == true
+  # cloudserver-1:
+  #   image: dvasilas/cloudserver:latest
+  #   networks:
+  #     - proteus_net
+  #   ports:
+  #     - 8001:8000
+  #     - 50001:50000
+  #   environment:
+  #     - REMOTE_MANAGEMENT_DISABLE=1
+  #     - S3BACKEND=file
+  #     - SCALITY_ACCESS_KEY_ID=accessKey1
+  #     - SCALITY_SECRET_ACCESS_KEY=verySecretKey1
+  #   volumes:
+  #     - ${PWD}/datastore/dataset/data2:/usr/src/app/localData
+  #     - ${PWD}/datastore/dataset/metadata2:/usr/src/app/localMetadata
+  #   deploy:
+  #     restart_policy:
+  #       condition: none
+  #     placement:
+  #       constraints:
+  #         - node.labels.cloud == true
 
 networks:
   qpu_graph:
