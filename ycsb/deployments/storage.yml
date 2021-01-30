@@ -10,10 +10,11 @@ services:
       - proteus_net
     ports:
       - 27017:27017
+    volumes:
+      - ${PWD}/data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: db
       MONGO_REPLICA_SET_NAME: rs0
     healthcheck:
       test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongo -u root -p example --quiet) -eq 1

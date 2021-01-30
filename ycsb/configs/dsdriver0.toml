@@ -27,7 +27,7 @@ measureDataTransfer = false
 [DatastoreConfig]
 type = "mongo"
 endpoint = "mongodb://mongo0:27017/?replicaSet=rs0"
-dbname = "cloudServer"
+dbname = "ycsb"
 [DatastoreConfig.Credentials]
 accessKeyID = "root"
 secretAccessKey = "example"

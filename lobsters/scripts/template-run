@@ -45,3 +45,9 @@ Total throughput
 [DataTransfer-dsdriver]
 [DataTransfer-sum]
 [DataTransfer-join]
+[QUERY] Throughput
+[QUERY] AverageLatency
+[QUERY] 50thPercentileLatency
+[QUERY] 90thPercentileLatency
+[QUERY] 95thPercentileLatency
+[QUERY] 99thPercentileLatency

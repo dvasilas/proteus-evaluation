@@ -1,4 +1,4 @@
-operator = "index"
+operator = "inMemIndex"
 state = "stateless"
 port = "50350"
 
@@ -13,7 +13,7 @@ maxWorkers = 2
 maxJobQueue = 10000
 
 [[InputSchema]]
-table = "testbuck"
+table = "ycsbbuck"
 [[InputSchema.Attributes]]
 key = "attribute0"
 type = "int"
@@ -23,13 +23,6 @@ tracing = false
 logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
-
-[StateBackend]
-endpoint = "mongodb://127.0.0.1:27017"
-
-[StateBackend.Credentials]
-accessKeyID = "root"
-secretAccessKey = "example"
 
 [[connections]]
 address = "127.0.0.1:50150"

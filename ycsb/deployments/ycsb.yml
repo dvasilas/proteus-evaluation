@@ -3,33 +3,34 @@ version: '3.1'
 
 services:
   ycsb:
-    image: 127.0.0.1:5000/ycsb:${TAG_YCSB}
+    # image: 127.0.0.1:5000/ycsb:${TAG_YCSB}
+    image: ycsb/dev
     networks:
       - proteus_net
     environment:
-     - TYPES=run
-     - THREADS=${THREADS}
-     - POOLSIZE=512
-     - WORKLOAD=workloada
-     - TABLE=ycsbbuck
-     - EXECUTIONTIME=60
-     - WARMUPTIME=20
-     - PROTEUSHOST=cloudserver-0
-     - PROTEUSPORT=8000
-     - S3HOST=cloudserver-0
-     - S3PORT=8000
-     - S3ACCESSKEYID=accessKey1
-     - S3SECRETKEY=verySecretKey1
-     - RECORDCOUNT=1000
-     - INSERTSTART=0
-     - INSERTCOUNT=1000
-     - QUERYPROPORTION=0
-     - UPDATEPROPORTION=0
-     - INSERTPROPORTION=1.0
-     - CARDINALITY=50
-     - OUTPUT_FILE_NAME=${LOGFILE}
+      - TYPES=run
+      - THREADS=${THREADS}
+      - EXECUTIONTIME=60
+      - WARMUPTIME=20
+      - CARDINALITY=5
+      - FIELDCOUNT=5
+      - POOLSIZE=512
+      - MONGOURL=mongodb://root:example@mongo0:27017/?replicaSet=rs0
+      - MONGOHOST=mongo0
+      - MONGOPORT=27017
+      - PROTEUSHOST=index-0
+      - PROTEUSPORT=50350
+      - S3HOST=cloudserver-0
+      - RECORDCOUNT=1000
+      - INSERTSTART=0
+      - INSERTCOUNT=1000
+      - QUERYPROPORTION=1.0
+      - UPDATEPROPORTION=0
+      - INSERTPROPORTION=0
+      - OUTPUT_FILE_NAME=${OUTPUT_FILE_NAME}
     volumes:
-      - /tmp:/ycsb
+      # - /tmp:/ycsb
+      - ${PWD}:/ycsb
     deploy:
       restart_policy:
         condition: none

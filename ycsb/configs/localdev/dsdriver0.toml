@@ -27,7 +27,7 @@ measureDataTransfer = false
 [DatastoreConfig]
 type = "mongo"
 endpoint = "mongodb://127.0.0.1:27017/?replicaSet=rs0"
-dbname = "testCollection"
+dbname = "ycsb"
 [DatastoreConfig.Credentials]
 accessKeyID = "root"
 secretAccessKey = "example"

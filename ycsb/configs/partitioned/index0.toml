@@ -24,13 +24,6 @@ logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
 
-[StateBackend]
-endpoint = "mongodb://mongo-0:27017"
-
-[StateBackend.Credentials]
-accessKeyID = "root"
-secretAccessKey = "example"
-
 [[connections]]
 address = "dsdriver-0:50150"
 local = "local"
