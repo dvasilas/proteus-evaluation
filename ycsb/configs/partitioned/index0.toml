@@ -1,11 +1,11 @@
-operator = "index"
+operator = "inMemIndex"
 state = "stateless"
 port = "50350"
 
 [ProcessingConfig]
 grpcServers = 1
 [ProcessingConfig.API]
-maxWorkers = 4
+maxWorkers = 34 
 maxJobQueue = 10000
 
 [ProcessingConfig.Input]
@@ -13,7 +13,7 @@ maxWorkers = 2
 maxJobQueue = 10000
 
 [[InputSchema]]
-table = "testbuck"
+table = "ycsbbuck"
 [[InputSchema.Attributes]]
 key = "attribute0"
 type = "int"

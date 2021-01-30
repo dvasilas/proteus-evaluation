@@ -2,7 +2,7 @@
 version: '3.1'
 
 services:
-  mongodb:
+  mongo0:
     image: mongo
     container_name: mongo0
     hostname: mongo0
@@ -18,7 +18,6 @@ services:
     healthcheck:
       test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongo -u root -p example --quiet) -eq 1
       interval: 10s
-      start_period: 30s
     command: ["--replSet", "rs0", "--bind_ip_all"]
     deploy:
       restart_policy:

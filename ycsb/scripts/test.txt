@@ -1,0 +1,7 @@
+Threadcount: 8
+[QUERY] Throughput: 5084.643651726121
+[QUERY] AverageLatency: 1.5564090589525126
+[QUERY] 50thPercentileLatency: 1.25
+[QUERY] 90thPercentileLatency: 2.281
+[QUERY] 95thPercentileLatency: 2.601
+[QUERY] 99thPercentileLatency: 3.981

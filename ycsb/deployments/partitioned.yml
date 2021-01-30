@@ -1,0 +1,82 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  dsdriver-0:
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/volume/configs/:/configs
+    command: /configs/dsdriver0.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.client == true
+
+#  dsdriver-1:
+#    image: qpu/stateless
+#    networks:
+#      - proteus_net
+#    volumes:
+#      - ${PWD}/configs:/configs
+#    command: /configs/dsdriver1.toml error
+#    deploy:
+#      restart_policy:
+#        condition: none
+#      placement:
+#        constraints:
+#          - node.labels.cloud == true
+
+  index-0:
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
+    networks:
+      - proteus_net
+#    ports:
+#      - 50350:50350
+    volumes:
+      - ${HOME}/volume/configs/:/configs
+    command: /configs/partitioned/index0.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.client == true
+
+#  index-1:
+#    image: qpu/stateless
+#    networks:
+#      - proteus_net
+#    volumes:
+#      - ${PWD}/configs:/configs
+#    command: /configs/partitioned/index1.toml error
+#    deploy:
+#      restart_policy:
+#        condition: none
+#      placement:
+#        constraints:
+#          - node.labels.cloud == true
+
+  router-0:
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
+    networks:
+      - proteus_net
+    ports:
+      - 50450:50450
+    volumes:
+      - ${HOME}/volume/configs/:/configs
+    command: /configs/partitioned/router.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.client == true
+
+networks:
+  qpu_graph:
+  proteus_net:
+    external: true

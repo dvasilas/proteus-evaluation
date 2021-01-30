@@ -13,7 +13,7 @@ maxWorkers = 2
 maxJobQueue = 10000
 
 [[InputSchema]]
-table = "testbuck"
+table = "ycsbbuck"
 [[InputSchema.Attributes]]
 key = "attribute0"
 type = "int"
@@ -25,9 +25,9 @@ measureNotificationLatency = false
 measureDataTransfer = false
 
 [DatastoreConfig]
-type = "s3"
-endpoint = "http://cloudserver-0:8000"
-logStreamEndpoint = "cloudserver-0:50000"
+type = "mongo"
+endpoint = "mongodb://mongo0:27017/?replicaSet=rs0"
+dbname = "cloudServer"
 [DatastoreConfig.Credentials]
-accessKeyID = "accessKey1"
-secretAccessKey = "verySecretKey1"
+accessKeyID = "root"
+secretAccessKey = "example"
