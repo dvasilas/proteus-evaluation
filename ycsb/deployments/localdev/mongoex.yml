@@ -19,22 +19,39 @@ services:
         constraints:
           - node.labels.cloud == true
 
-  # mongo-express-1:
-  #   image: mongo-express
-  #   networks:
-  #     - proteus_net
-  #   ports:
-  #     - 8082:8081
-  #   environment:
-  #     ME_CONFIG_MONGODB_SERVER: mongo-1
-  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
-  #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
-  #   deploy:
-  #     restart_policy:
-  #       condition: none
-  #     placement:
-  #       constraints:
-  #         - node.labels.cloud == true
+  mongo-express-1:
+    image: mongo-express
+    networks:
+      - proteus_net
+    ports:
+      - 8082:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo1
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  mongo-express-2:
+    image: mongo-express
+    networks:
+      - proteus_net
+    ports:
+      - 8083:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo2
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
 
 networks:
   proteus_net:

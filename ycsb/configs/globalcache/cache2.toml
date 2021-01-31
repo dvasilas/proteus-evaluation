@@ -1,5 +1,5 @@
-operator = "router"
-state = "stateless"
+operator = "cache"
+state = "cache"
 port = "50450"
 
 [ProcessingConfig]
@@ -13,7 +13,7 @@ maxWorkers = 2
 maxJobQueue = 10000
 
 [[InputSchema]]
-table = "testbuck"
+table = "ycsbbuck"
 [[InputSchema.Attributes]]
 key = "attribute0"
 type = "int"
@@ -24,6 +24,10 @@ logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
 
+[CacheConfig]
+size = 1000000
+ttl = 5
+
 [[connections]]
-address = "index-0:50350"
+address = "index-2:50350"
 local = "local"

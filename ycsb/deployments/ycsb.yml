@@ -2,9 +2,9 @@
 version: '3.1'
 
 services:
-  ycsb:
-    # image: 127.0.0.1:5000/ycsb:${TAG_YCSB}
-    image: ycsb/dev
+  ycsb-0:
+    image: 127.0.0.1:5000/ycsb:${TAG_YCSB}
+    #    image: ycsb/dev
     networks:
       - proteus_net
     environment:
@@ -12,25 +12,25 @@ services:
       - THREADS=${THREADS}
       - EXECUTIONTIME=60
       - WARMUPTIME=20
-      - CARDINALITY=5
+      - CARDINALITY=10000
+      - QCARDINALITY=1000
       - FIELDCOUNT=5
       - POOLSIZE=512
       - MONGOURL=mongodb://root:example@mongo0:27017/?replicaSet=rs0
       - MONGOHOST=mongo0
       - MONGOPORT=27017
-      - PROTEUSHOST=index-0
-      - PROTEUSPORT=50350
-      - S3HOST=cloudserver-0
-      - RECORDCOUNT=1000
+      - PROTEUSHOST=router-0
+      - PROTEUSPORT=50450
+      - RECORDCOUNT=99000
       - INSERTSTART=0
-      - INSERTCOUNT=1000
-      - QUERYPROPORTION=1.0
-      - UPDATEPROPORTION=0
+      - INSERTCOUNT=33000
+      - QUERYPROPORTION=${QUERY_PROP}
+      - UPDATEPROPORTION=${UPDATE_PROP}
       - INSERTPROPORTION=0
-      - OUTPUT_FILE_NAME=${OUTPUT_FILE_NAME}
+      - OUTPUT_FILE_NAME=${OUTPUT_FILE_NAME}.0
     volumes:
-      # - /tmp:/ycsb
-      - ${PWD}:/ycsb
+      - /tmp:/ycsb
+      #- ${PWD}:/ycsb
     deploy:
       restart_policy:
         condition: none
@@ -38,21 +38,77 @@ services:
         constraints:
           - node.labels.client == true
 
-# index:
-#    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
-#    networks:
-#      - proteus_net
-#    ports:
-#      - 50350:50350
-#    volumes:
-#      - ${PWD}/configs:/configs
-#    command: /configs/index.toml error
-#    deploy:
-#      restart_policy:
-#        condition: none
-#      placement:
-#        constraints:
-#          - node.labels.client == true
+  ycsb-1:
+    image: 127.0.0.1:5000/ycsb:${TAG_YCSB}
+    #    image: ycsb/dev
+    networks:
+      - proteus_net
+    environment:
+      - TYPES=run
+      - THREADS=${THREADS}
+      - EXECUTIONTIME=60
+      - WARMUPTIME=20
+      - CARDINALITY=10000
+      - QCARDINALITY=1000
+      - FIELDCOUNT=5
+      - POOLSIZE=512
+      - MONGOURL=mongodb://root:example@mongo1:27017/?replicaSet=rs0
+      - MONGOHOST=mongo1
+      - MONGOPORT=27017
+      - PROTEUSHOST=router-1
+      - PROTEUSPORT=50450
+      - RECORDCOUNT=99000
+      - INSERTSTART=33000
+      - INSERTCOUNT=33000
+      - QUERYPROPORTION=${QUERY_PROP}
+      - UPDATEPROPORTION=${UPDATE_PROP}
+      - INSERTPROPORTION=0
+      - OUTPUT_FILE_NAME=${OUTPUT_FILE_NAME}.1
+    volumes:
+      - /tmp:/ycsb
+      #- ${PWD}:/ycsb
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  ycsb-2:
+    image: 127.0.0.1:5000/ycsb:${TAG_YCSB}
+    #    image: ycsb/dev
+    networks:
+      - proteus_net
+    environment:
+      - TYPES=run
+      - THREADS=${THREADS}
+      - EXECUTIONTIME=60
+      - WARMUPTIME=20
+      - CARDINALITY=10000
+      - QCARDINALITY=1000
+      - FIELDCOUNT=5
+      - POOLSIZE=512
+      - MONGOURL=mongodb://root:example@mongo2:27017/?replicaSet=rs0
+      - MONGOHOST=mongo2
+      - MONGOPORT=27017
+      - PROTEUSHOST=router-2
+      - PROTEUSPORT=50450
+      - RECORDCOUNT=99000
+      - INSERTSTART=66000
+      - INSERTCOUNT=33000
+      - QUERYPROPORTION=${QUERY_PROP}
+      - UPDATEPROPORTION=${UPDATE_PROP}
+      - INSERTPROPORTION=0
+      - OUTPUT_FILE_NAME=${OUTPUT_FILE_NAME}.2
+    volumes:
+      - /tmp:/ycsb
+      #- ${PWD}:/ycsb
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud1 == true
 
 networks:
   qpu_graph:

@@ -25,9 +25,9 @@ measureNotificationLatency = false
 measureDataTransfer = false
 
 [DatastoreConfig]
-type = "s3"
-endpoint = "http://cloudserver-1:8000"
-logStreamEndpoint = "cloudserver-1:50000"
+type = "mongo"
+endpoint = "mongodb://mongo1:27017/?replicaSet=rs0"
+dbname = "ycsb"
 [DatastoreConfig.Credentials]
-accessKeyID = "accessKey1"
-secretAccessKey = "verySecretKey1"
+accessKeyID = "root"
+secretAccessKey = "example"

@@ -1,11 +1,11 @@
-operator = "router"
+operator = "inMemIndex"
 state = "stateless"
-port = "50450"
+port = "50350"
 
 [ProcessingConfig]
 grpcServers = 1
 [ProcessingConfig.API]
-maxWorkers = 4
+maxWorkers = 3 
 maxJobQueue = 10000
 
 [ProcessingConfig.Input]
@@ -25,11 +25,5 @@ measureNotificationLatency = false
 measureDataTransfer = false
 
 [[connections]]
-address = "index-0:50350"
-local = "local"
-[[connections]]
-address = "index-1:50350"
-local = "local"
-[[connections]]
-address = "index-2:50350"
+address = "dsdriver-2:50150"
 local = "local"

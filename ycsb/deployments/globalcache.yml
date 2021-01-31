@@ -50,7 +50,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/index0.toml error
+    command: /configs/globalcache/index0.toml error
     deploy:
       restart_policy:
         condition: none
@@ -64,7 +64,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/index1.toml error
+    command: /configs/globalcache/index1.toml error
     deploy:
       restart_policy:
         condition: none
@@ -78,7 +78,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/index2.toml error
+    command: /configs/globalcache/index2.toml error
     deploy:
       restart_policy:
         condition: none
@@ -86,13 +86,97 @@ services:
         constraints:
           - node.labels.cloud1 == true
 
+  cache-0-1:
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/volume/configs/:/configs
+    command: /configs/globalcache/cache0.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
+  cache-0-2:
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/volume/configs/:/configs
+    command: /configs/globalcache/cache0.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud1 == true
+
+  cache-1-0:
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/volume/configs/:/configs
+    command: /configs/globalcache/cache1.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.client == true
+
+  cache-1-2:
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/volume/configs/:/configs
+    command: /configs/globalcache/cache1.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud1 == true
+
+  cache-2-0:
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/volume/configs/:/configs
+    command: /configs/globalcache/cache2.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.client == true
+
+  cache-2-1:
+    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
+    networks:
+      - proteus_net
+    volumes:
+      - ${HOME}/volume/configs/:/configs
+    command: /configs/globalcache/cache2.toml error
+    deploy:
+      restart_policy:
+        condition: none
+      placement:
+        constraints:
+          - node.labels.cloud == true
+
   router-0:
     image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}
     networks:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/router0.toml error
+    command: /configs/globalcache/router0.toml error
     deploy:
       restart_policy:
         condition: none
@@ -106,7 +190,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/router1.toml error
+    command: /configs/globalcache/router1.toml error
     deploy:
       restart_policy:
         condition: none
@@ -120,7 +204,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/router2.toml error
+    command: /configs/globalcache/router2.toml error
     deploy:
       restart_policy:
         condition: none

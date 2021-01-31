@@ -50,7 +50,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/index0.toml error
+    command: /configs/global/index0.toml error
     deploy:
       restart_policy:
         condition: none
@@ -64,7 +64,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/index1.toml error
+    command: /configs/global/index1.toml error
     deploy:
       restart_policy:
         condition: none
@@ -78,7 +78,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/index2.toml error
+    command: /configs/global/index2.toml error
     deploy:
       restart_policy:
         condition: none
@@ -92,7 +92,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/router0.toml error
+    command: /configs/global/router0.toml error
     deploy:
       restart_policy:
         condition: none
@@ -106,7 +106,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/router1.toml error
+    command: /configs/global/router1.toml error
     deploy:
       restart_policy:
         condition: none
@@ -120,7 +120,7 @@ services:
       - proteus_net
     volumes:
       - ${HOME}/volume/configs/:/configs
-    command: /configs/partitioned/router2.toml error
+    command: /configs/global/router2.toml error
     deploy:
       restart_policy:
         condition: none

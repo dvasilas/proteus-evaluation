@@ -1,5 +1,5 @@
-operator = "router"
-state = "stateless"
+operator = "cache"
+state = "cache"
 port = "50450"
 
 [ProcessingConfig]
@@ -24,12 +24,10 @@ logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
 
+[CacheConfig]
+size = 1000000
+ttl = 5
+
 [[connections]]
 address = "index-0:50350"
-local = "local"
-[[connections]]
-address = "index-1:50350"
-local = "local"
-[[connections]]
-address = "index-2:50350"
 local = "local"

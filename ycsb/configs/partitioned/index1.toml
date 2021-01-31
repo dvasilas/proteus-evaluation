@@ -1,11 +1,11 @@
-operator = "index"
+operator = "inMemIndex"
 state = "stateless"
 port = "50350"
 
 [ProcessingConfig]
 grpcServers = 1
 [ProcessingConfig.API]
-maxWorkers = 4
+maxWorkers = 3 
 maxJobQueue = 10000
 
 [ProcessingConfig.Input]
@@ -13,7 +13,7 @@ maxWorkers = 2
 maxJobQueue = 10000
 
 [[InputSchema]]
-table = "testbuck"
+table = "ycsbbuck"
 [[InputSchema.Attributes]]
 key = "attribute0"
 type = "int"
@@ -24,13 +24,12 @@ logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
 
-[StateBackend]
-endpoint = "mongodb://mongo-1:27017"
-
-[StateBackend.Credentials]
-accessKeyID = "root"
-secretAccessKey = "example"
-
+[[connections]]
+address = "dsdriver-0:50150"
+local = "local"
 [[connections]]
 address = "dsdriver-1:50150"
+local = "local"
+[[connections]]
+address = "dsdriver-2:50150"
 local = "local"

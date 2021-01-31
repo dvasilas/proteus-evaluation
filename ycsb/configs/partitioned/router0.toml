@@ -27,9 +27,3 @@ measureDataTransfer = false
 [[connections]]
 address = "index-0:50350"
 local = "local"
-[[connections]]
-address = "index-1:50350"
-local = "local"
-[[connections]]
-address = "index-2:50350"
-local = "local"

@@ -3,29 +3,29 @@ version: '3.1'
 
 services:
   ycsb:
-    # image: 127.0.0.1:5000/ycsb:${TAG_YCSB}
-    image: ycsb/dev
+    image: 127.0.0.1:5000/ycsb:${TAG_YCSB}
+    #    image: ycsb/dev
     networks:
       - proteus_net
     environment:
       - TYPE=load
-      - THREADS=${THREADS}
+      - THREADS=1
       - EXECUTIONTIME=60
       - WARMUPTIME=20
-      - CARDINALITY=5
+      - CARDINALITY=10000
       - FIELDCOUNT=5
       - POOLSIZE=512
-      - MONGOURL=mongodb://root:example@mongo0:27017/?replicaSet=rs0
+      - MONGOURL=mongodb://root:example@mongo2:27017/?replicaSet=rs0
       - MONGOHOST=mongo0
       - MONGOPORT=27017
       - PROTEUSHOST=index-0
       - PROTEUSPORT=50350
-      - RECORDCOUNT=1000
-      - INSERTSTART=0
-      - INSERTCOUNT=1000
+      - RECORDCOUNT=99000
+      - INSERTSTART=66000
+      - INSERTCOUNT=33000
       - QUERYPROPORTION=0
       - UPDATEPROPORTION=0
-      - OUTPUT_FILE_NAME=${OUTPUT_FILE_NAME}
+      - OUTPUT_FILE_NAME=out
     volumes:
       - /tmp:/ycsb
     deploy:
@@ -33,7 +33,7 @@ services:
         condition: none
       placement:
         constraints:
-          - node.labels.client == true
+          - node.labels.cloud1 == true
 
 # index:
 #    image: 127.0.0.1:5000/proteus-stateless:${TAG_QPU}

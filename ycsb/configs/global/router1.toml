@@ -13,7 +13,7 @@ maxWorkers = 2
 maxJobQueue = 10000
 
 [[InputSchema]]
-table = "testbuck"
+table = "ycsbbuck"
 [[InputSchema.Attributes]]
 key = "attribute0"
 type = "int"
@@ -25,5 +25,11 @@ measureNotificationLatency = false
 measureDataTransfer = false
 
 [[connections]]
+address = "index-0:50350"
+local = "local"
+[[connections]]
 address = "index-1:50350"
+local = "local"
+[[connections]]
+address = "index-2:50350"
 local = "local"

@@ -1,6 +1,6 @@
-operator = "router"
+operator = "db_driver"
 state = "stateless"
-port = "50450"
+port = "50150"
 
 [ProcessingConfig]
 grpcServers = 1
@@ -24,12 +24,10 @@ logTimestamps = false
 measureNotificationLatency = false
 measureDataTransfer = false
 
-[[connections]]
-address = "index-0:50350"
-local = "local"
-[[connections]]
-address = "index-1:50350"
-local = "local"
-[[connections]]
-address = "index-2:50350"
-local = "local"
+[DatastoreConfig]
+type = "mongo"
+endpoint = "mongodb://mongo2:27017/?replicaSet=rs0"
+dbname = "ycsb"
+[DatastoreConfig.Credentials]
+accessKeyID = "root"
+secretAccessKey = "example"
